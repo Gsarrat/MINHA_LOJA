@@ -1,8 +1,8 @@
-from flask import redirect, render_template, url_for, flash, request, session
+from flask import redirect, render_template, url_for, flash, request, session, current_app
 from .forms import Addprodutos
 from loja import db, app, photos
 from .models import Marca, Categoria, Addproduto
-import secrets
+import secrets, os
 
 
 @app.route('/addmarca', methods=['GET', 'POST'])
@@ -37,6 +37,23 @@ def updatemarca(id):
     
     
     return render_template('/produtos/updatemarca.html', title='Atualizar Fabricantes', updatemarca=updatemarca)
+
+###################################
+@app.route('/deletemarca/<int:id>', methods=['POST'])
+def deletemarca(id):
+
+    marca = Marca.query.get_or_404(id)
+    if request.method=='POST':
+        db.session.delete(marca)
+        db.session.commit()
+        flash(f'A Marca {marca.name} foi Deletada com Sucesso', 'success')
+        return redirect(url_for('admin'))
+    flash(f'A Marca {marca.name} NAO foi Deletada', 'warning')
+    return redirect(url_for('admin'))
+    
+###################################
+
+
 
 @app.route('/updatecat/<int:id>', methods=['GET', 'POST'])
 def updatecat(id):
@@ -74,7 +91,7 @@ def addcat():
 
 @app.route('/updateproduto/<int:id>', methods=['GET', 'POST'])
 def updateproduto(id):
-    print('deu certo')
+
     marcas = Marca.query.all()
     categorias = Categoria.query.all()
     produto = Addproduto.query.get_or_404(id)
@@ -86,19 +103,41 @@ def updateproduto(id):
         produto.name = form.name.data
         produto.price = form.price.data
         produto.discount = form.discount.data
-
-        produto.marca_id = marca
-        produto.categoria_id = categoria
-
         produto.stock = form.stock.data
         produto.colors = form.colors.data
         produto.desc = form.discription.data
 
+        produto.marca_id = marca
+        produto.categoria_id = categoria
+
+        if request.files.get('image_1'):
+            try:
+                os.unlink(os.path.join(current_app.root_path, "'static/images/" + produto.image_1))
+                produto.image_1 = photos.save(request.files.get('image_1'), name=secrets.token_hex(10)+".")
+            except:
+                produto.image_1 = photos.save(request.files.get('image_1'), name=secrets.token_hex(10)+".")
+        
+        if request.files.get('image_2'): 
+            try:
+                os.unlink(os.path.join(current_app.root_path, "'static/images/" + produto.image_2))
+                produto.image_2 = photos.save(request.files.get('image_2'), name=secrets.token_hex(10)+".")
+            except:
+                produto.image_2 = photos.save(request.files.get('image_2'), name=secrets.token_hex(10)+".")
+        
+        if request.files.get('image_3'):
+            try:
+                os.unlink(os.path.join(current_app.root_path, "'static/images/" + produto.image_3))
+                produto.image_3 = photos.save(request.files.get('image_3'), name=secrets.token_hex(10)+".")
+            except:
+                produto.image_3 = photos.save(request.files.get('image_3'), name=secrets.token_hex(10)+".")
+
+ 
+
         db.session.commit()
         flash('Produto foi Atualizado com Successo', 'success')
-        print('adicionou')
+
         return redirect(url_for('admin'))
-    print('entrou em outro caminho')
+
 
     form.name.data = produto.name
     form.price.data = produto.price

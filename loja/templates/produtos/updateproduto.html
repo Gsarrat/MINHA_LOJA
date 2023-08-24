@@ -41,9 +41,9 @@
             {{ render_field(form.discription, class="form-control", placeholder="Descricao do produto", rows="10") }}
             <div class="container">
                 <div class="row">
-                    <div class="col-md-4"><input type="file" name="image_1" class="form-control"></div>
-                    <div class="col-md-4"><input type="file" name="image_2" class="form-control"></div>
-                    <div class="col-md-4"><input type="file" name="image_3" class="form-control"></div>
+                    <div class="col-md-4">{{ render_field(form.image_1, class="form-control") }}</div>
+                    <div class="col-md-4">{{ render_field(form.image_2, class="form-control") }}</div>
+                    <div class="col-md-4">{{ render_field(form.image_3, class="form-control") }}</div>
 
                 </div>
             </div>

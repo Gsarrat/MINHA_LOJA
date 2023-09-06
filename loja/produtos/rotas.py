@@ -88,6 +88,19 @@ def addcat():
         return redirect(url_for('addcat'))
     return render_template('/produtos/addmarca.html')
 
+@app.route('/deletecategoria/<int:id>', methods=['POST'])
+def deletecategoria(id):
+
+    categoria = Categoria.query.get_or_404(id)
+    if request.method=='POST':
+        db.session.delete(categoria)
+        db.session.commit()
+        flash(f'A Categoria {categoria.name} foi Deletada com Sucesso', 'success')
+        return redirect(url_for('admin'))
+    flash(f'A Categoria {categoria.name} NAO foi Deletada', 'warning')
+    return redirect(url_for('admin'))
+    
+
 
 @app.route('/updateproduto/<int:id>', methods=['GET', 'POST'])
 def updateproduto(id):

@@ -7,8 +7,10 @@ if __name__ == "__main__":
 
 
 
-# 18.0
-# Add - Produtos adicionados por ultimo aparecem na frente
-# Add - O botao detalhas dos produtos está funcionando
-# Add - pagina_unica.html foi adicionada, e ela abre cada produto
-
+# 19.0
+# Add - funcionalidade de troca entre as imagens na pagina_unica
+# Add - Em pagina_unica o dropdown de filtro marcas e categoria
+# Add - O botao de compra e adicionar ao carrinho na pagina_unica
+# Add - Todas as opcaoes do botao mencionado acima 
+# Add - Criado dentro de carrinho o arquivo carrinhos.py e suas respectivas rotas de teste
+# Upg - Alguns estilos adicianados a detalhes

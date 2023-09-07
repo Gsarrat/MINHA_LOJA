@@ -22,7 +22,7 @@ configure_uploads(app, photos)
 
 from loja.ADMIN import rotas
 from loja.produtos import rotas
-
+from loja.carrinho import carrinhos
 
 
 

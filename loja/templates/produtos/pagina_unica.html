@@ -46,7 +46,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+                        <a class="nav-link disabled" aria-disabled="false" tabindex="-1">Carrinho({{session['LojainCarrinho']|length}})</a>
                     </li>
                 </ul>
                 <form class="d-flex" role="search">
@@ -90,10 +90,7 @@
                     {% set col = color.split(':') %}
                     <option value="{{col[0]}}">"{{col[0]|capitalize}}"</option>
                     {% endfor %}
-
                 </select>
-
-
 
             </form>
 

@@ -7,10 +7,8 @@ if __name__ == "__main__":
 
 
 
-# 19.0
-# Add - funcionalidade de troca entre as imagens na pagina_unica
-# Add - Em pagina_unica o dropdown de filtro marcas e categoria
-# Add - O botao de compra e adicionar ao carrinho na pagina_unica
-# Add - Todas as opcaoes do botao mencionado acima 
-# Add - Criado dentro de carrinho o arquivo carrinhos.py e suas respectivas rotas de teste
-# Upg - Alguns estilos adicianados a detalhes
+# 20.0
+# Add - Carrinho adicinando itens
+# Add - Index atualizada
+# Bug - Nao cosigo limpar o carrinho
+# Bug - Erro 304 no get /static/images/*nome da imagem*

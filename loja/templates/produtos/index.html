@@ -1,0 +1,88 @@
+{% extends 'layouts.html' %}
+{% block content %}
+
+<div class="container">
+<nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">Pagina Home</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+          <li class="nav-item">
+            <a class="nav-link" href="/">Todos Produtos</a>
+          </li>
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Marcas | Fabricante
+            </a>
+            <ul class="dropdown-menu">
+              {% for marca in marcas %}
+              <li><a class="dropdown-item" href="{{url_for('get_marca', id=marca.id)}}">{{marca.name}}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" aria-disabled="true">Disabled</a>
+          </li>
+        </ul>
+        <form class="d-flex" role="search">
+          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success" type="submit">Search</button>
+        </form>
+      </div>
+    </div>
+  </nav>
+</div>
+<div class="container">
+    <div class="row">
+        {% if marca %}
+        {% for m in marca %}
+
+        <div class="col-md-3">
+          <div class="card">
+              <img src="{{url_for('static', filename='images/' + m.image_1)}}" alt="{{m.name}}" class="card-img-top" height="180">
+              <div class="card-body">
+                {% if m.discount > 0 %}
+                <h5 style="text-shadow: 1px 1px 2px #000; color: #f00; transform: rotate(-3deg); position:absolute; top: 50%; left: 25%; font-weight: 600;">Desconto {{m.discount}} %</p>
+                {% endif %}
+                <h4 class="text-center">{{m.name}}</h4>
+                <p class="text-center">Preco: R$ {{m.price}}</p>
+
+              </div>
+              <div class="card-footer">
+                  <a href="#" class="float-left btn btn-sm btn-success">Detalhes Fabricante</a>
+                  <a href="#" class="float-right btn btn-sm btn-warning">Adicionar Carrinho</a>
+                </div>
+              </div>
+            </div>
+
+            {% endfor %}
+
+            {% else %}
+
+            {% for produto in produtos %}
+            <div class="col-md-3">
+                    <div class="card">
+                        <img src="{{url_for('static', filename='images/' + produto.image_1)}}" alt="{{produto.name}}" class="card-img-top" height="180">
+                        <div class="card-body">
+                          {% if produto.discount > 0 %}
+                          <h5 style="text-shadow: 1px 1px 2px #000; color: #f00; transform: rotate(-3deg); position:absolute; top: 50%; left: 25%; font-weight: 600;">Desconto {{produto.discount}} %</p>
+                          {% endif %}
+                          <h4 class="text-center">{{produto.name}}</h4>
+                          <p class="text-center">Preco: R$ {{produto.price}}</p>
+
+                        </div>
+                        <div class="card-footer">
+                            <a href="#" class="float-left btn btn-sm btn-success">Detalhes Produto</a>
+                            <a href="#" class="float-right btn btn-sm btn-warning">Adicionar Carrinho</a>
+                          </div>
+                        </div>
+                      </div>
+                      {% endfor %}
+                    </div>
+                  </div>
+{% endif %}
+{% endblock content %}

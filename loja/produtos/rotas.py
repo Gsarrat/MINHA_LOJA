@@ -5,6 +5,20 @@ from .models import Marca, Categoria, Addproduto
 import secrets, os
 
 
+@app.route('/')
+def home():
+    produtos = Addproduto.query.filter(Addproduto.stock > 0)
+    marcas = Marca.query.all()
+    return render_template('produtos/index.html', produtos=produtos, marcas=marcas)
+
+
+@app.route('/marca/<int:id>')
+def get_marca(id):
+    marca = Addproduto.query.filter_by(marca_id=id)
+    return render_template('/produtos/index.html', marca=marca)
+
+
+
 @app.route('/addmarca', methods=['GET', 'POST'])
 def addmarca():
     if 'email' not in session:
@@ -202,3 +216,26 @@ def addproduto():
 
     return render_template('produtos/addproduto.html', title="Cadastrar Produtos", form=form, marcas=marcas, categorias=categorias)
 
+
+
+
+@app.route('/deleteproduto/<int:id>', methods=['POST'])
+def deleteproduto(id):
+
+    produto = Addproduto.query.get_or_404(id)
+    if request.method=='POST':
+
+        if request.files.get('image_1'):
+            try:
+                os.unlink(os.path.join(current_app.root_path, "'static/images/" + produto.image_1))
+                os.unlink(os.path.join(current_app.root_path, "'static/images/" + produto.image_2))
+                os.unlink(os.path.join(current_app.root_path, "'static/images/" + produto.image_3))
+            except Exception as e:
+                print(e)
+
+        db.session.delete(produto)
+        db.session.commit()
+        return redirect(url_for('admin'))
+    flash(f'O Produto {produto.name} foi cadastrado com sucesso', 'success')
+
+    return redirect(url_for('admin'))

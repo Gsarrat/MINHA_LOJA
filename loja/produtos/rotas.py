@@ -7,15 +7,28 @@ import secrets, os
 
 @app.route('/')
 def home():
-    produtos = Addproduto.query.filter(Addproduto.stock > 0)
-    marcas = Marca.query.all()
-    return render_template('produtos/index.html', produtos=produtos, marcas=marcas)
+    produtos = Addproduto.query.filter(Addproduto.stock > 0).all()
+    marcas = Marca.query.join(Addproduto, (Marca.id == Addproduto.marca_id)).all()
+    categorias = Categoria.query.join(Addproduto, (Categoria.id == Addproduto.categoria_id)).all()
+
+    return render_template('produtos/index.html', produtos=produtos, marcas=marcas, categorias=categorias)
 
 
 @app.route('/marca/<int:id>')
 def get_marca(id):
     marca = Addproduto.query.filter_by(marca_id=id)
-    return render_template('/produtos/index.html', marca=marca)
+    marcas = Marca.query.join(Addproduto,(Marca.id == Addproduto.marca_id)).all()
+    categorias = Categoria.query.join(Addproduto, (Categoria.id == Addproduto.categoria_id)).all()
+
+    return render_template('/produtos/index.html', marca=marca, marcas=marcas, categorias=categorias)
+
+@app.route('/categorias/<int:id>')
+def get_categoria(id):
+    get_cat_prod = Addproduto.query.filter_by(categoria_id=id)
+    categorias = Categoria.query.join(Addproduto, Categoria.id == Addproduto.categoria_id).all()
+    marcas = Marca.query.join(Addproduto, (Marca.id == Addproduto.marca_id)).all()
+
+    return render_template('/produtos/index.html', get_cat_prod=get_cat_prod, categorias=categorias, marcas=marcas)
 
 
 

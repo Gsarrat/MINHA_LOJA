@@ -14,6 +14,7 @@
           <li class="nav-item">
             <a class="nav-link" href="/">Todos Produtos</a>
           </li>
+
           <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
               Marcas | Fabricante
@@ -24,6 +25,19 @@
               {% endfor %}
             </ul>
           </li>
+
+
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                Categorias
+            </a>
+            <ul class="dropdown-menu">
+                {% for categoria in categorias %}
+                <li><a class="dropdown-item" href="{{ url_for('get_categoria', id=categoria.id) }}">{{ categoria.name }}</a></li>
+                {% endfor %}
+            </ul>
+        </li>
+
           <li class="nav-item">
             <a class="nav-link disabled" aria-disabled="true">Disabled</a>
           </li>
@@ -60,6 +74,27 @@
             </div>
 
             {% endfor %}
+
+            {% elif get_cat_prod %}            
+            {% for get_cat in get_cat_prod %}
+            <div class="col-md-3">
+              <div class="card">
+                  <img src="{{url_for('static', filename='images/' + get_cat.image_1)}}" alt="{{get_cat.name}}" class="card-img-top" height="180">
+                  <div class="card-body">
+                    {% if get_cat.discount > 0 %}
+                    <h5 style="text-shadow: 1px 1px 2px #000; color: #f00; transform: rotate(-3deg); position:absolute; top: 50%; left: 25%; font-weight: 600;">Desconto {{get_cat.discount}} %</p>
+                    {% endif %}
+                    <h4 class="text-center">{{get_cat.name}}</h4>
+                    <p class="text-center">Preco: R$ {{get_cat.price}}</p>
+    
+                  </div>
+                  <div class="card-footer">
+                      <a href="#" class="float-left btn btn-sm btn-success">Detalhes Fabricante</a>
+                      <a href="#" class="float-right btn btn-sm btn-warning">Adicionar Carrinho</a>
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
 
             {% else %}
 

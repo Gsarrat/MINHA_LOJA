@@ -8,7 +8,7 @@ import secrets, os
 @app.route('/')
 def home():
     pagina = request.args.get('pagina',1, type=int)
-    produtos = Addproduto.query.filter(Addproduto.stock > 0).paginate(page=pagina, per_page=3)
+    produtos = Addproduto.query.filter(Addproduto.stock > 0).order_by(Addproduto.id.desc()).paginate(page=pagina, per_page=3)
     marcas = Marca.query.join(Addproduto, (Marca.id == Addproduto.marca_id)).all()
     categorias = Categoria.query.join(Addproduto, (Categoria.id == Addproduto.categoria_id)).all()
 
@@ -24,6 +24,14 @@ def get_marca(id):
     categorias = Categoria.query.join(Addproduto, (Categoria.id == Addproduto.categoria_id)).all()
 
     return render_template('/produtos/index.html', marca=marca, marcas=marcas, categorias=categorias, get_m=get_m)
+
+@app.route('/produto/<int:id>')
+def pagina_unica(id):
+    produto = Addproduto.query.get_or_404(id)
+
+    return render_template('/produtos/pagina_unica.html', produto=produto)
+
+
 
 @app.route('/categorias/<int:id>')
 def get_categoria(id):

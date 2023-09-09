@@ -1,0 +1,50 @@
+{% extends 'layouts.html' %}
+{% block content %}
+
+
+<div class="container">
+    <h1>Meu Carrinho</h1>
+    <div class="row">
+        <table class="table table-sm">
+            <thead>
+                <th>Codigo</th>
+                <th>Nome</th>
+                <th>Cor</th>
+                <th>Preco</th>
+                <th>Desconto</th>
+                <th>Subtotal</th>
+                <th>Atualizar</th>
+                <th>Deletar</th>
+            </thead>
+            <tbody>
+                {% for key , produto in session['LojainCarrinho'].items() %}
+                {% set discount = "%0.2f" |format((produto.discount/100) * produto.price|float) %}
+
+                <tr>
+                    <td>{{loop.index}}</td>
+                    <td>{{produto.name}}</td>
+                    <td>{{produto.color}}</td>
+                    <td>R$ {{produto.price}}</td>
+                    {% if produto.discount > 0 %}
+                    <td>{{produto.discount}} % &nbsp; = {{discount}}</td>
+                    {% else %}
+
+                    <td></td>
+                    {% endif %}
+
+                    {% set subtotal = produto.quantity|int * produto.price|float %}
+                    <td>{{"%0.2f"|format ((subtotal|float) - discount|float)}}</td>
+
+                    <td><a href="#">Atualizar</a></td>
+                    <td><a href="#">Remover</a></td>
+                </tr>
+                {% endfor %}
+
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+{% endblock content %}
+

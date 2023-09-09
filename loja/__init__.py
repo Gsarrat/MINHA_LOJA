@@ -9,7 +9,7 @@ import os
 basedir = os.path.abspath(os.path.dirname(__file__))
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///minhaloja.db"
-app.config['SECRET_KEY'] = "1234"
+app.config['SECRET_KEY'] = "12345"
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
 

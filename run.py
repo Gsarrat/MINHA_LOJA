@@ -7,8 +7,6 @@ if __name__ == "__main__":
 
 
 
-# 20.0
-# Add - Carrinho adicinando itens
-# Add - Index atualizada
-# Bug - Nao cosigo limpar o carrinho
-# Bug - Erro 304 no get /static/images/*nome da imagem*
+# 21.0
+# Add - carrinho de compras
+# Add - calculo do desconto no carrinho de compras

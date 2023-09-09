@@ -1,6 +1,8 @@
 from flask import render_template, session, request, redirect, url_for, flash, current_app
 from loja import db, app
 from loja.produtos.models import Addproduto
+from loja.produtos.rotas import marcas, categorias
+import json
 
 def M_Dicionarios(dic1, dic2):
     if isinstance(dic1, list) and isinstance(dic2, list):
@@ -44,8 +46,8 @@ def AddCart():
 
 @app.route('/carros')
 def getCart():
-    if 'LojainCarrinho' not in session:
-        return redirect(request.referrer)
+    if 'LojainCarrinho' not in session or len(session['LojainCarrinho']) <=0:
+        return redirect(url_for('home'))
     subtotal = 0
     valorpagar = 0
     for key, produto in session['LojainCarrinho'].items():
@@ -54,11 +56,11 @@ def getCart():
         subtotal -= discount 
         imposto = ("%.2f"% (.00 * float(subtotal))) # <----- aqui altera a aliquota de imposto a ser calculado no .00
         valorpagar = float("%.2f" %(1.06 * subtotal))
-    return render_template('produtos/carros.html' , imposto=imposto, valorpagar=valorpagar)
+    return render_template('produtos/carros.html' , imposto=imposto, valorpagar=valorpagar, marcas=marcas(), categorias=categorias())
 
 @app.route('/updateCarro/<int:code>', methods=['POST'])
 def updateCarro(code):
-    if 'LojainCarrinho' not in session and len(session['LojainCarrinho'])<= 0:
+    if 'LojainCarrinho' not in session or len(session['LojainCarrinho'])<= 0:
         return redirect(url_for('home'))
     if request.method == "POST":
         quantity = request.form.get('quantity')
@@ -75,7 +77,25 @@ def updateCarro(code):
         except Exception as e:
             print(e)
             return redirect(url_for('getCart'))
+        
 
+
+
+@app.route('/deleteiten/<int:id>')
+def deleteiten(id):
+    if 'LojainCarrinho' not in session or len(session['LojainCarrinho'])<= 0:
+        return redirect(url_for('home'))
+    try:
+        session.modified = True
+        for key, item in session['LojainCarrinho'].items():
+            if int(key) == id:
+                session['LojainCarrinho'].pop(key,None)
+                flash('Item foi Deletado com sucesso!')
+                return redirect(url_for('getCart'))
+
+    except Exception as e:
+            print(e)
+            return redirect(url_for('getCart'))
 
 
 

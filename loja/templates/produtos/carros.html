@@ -58,12 +58,12 @@
 
                             <td><button type="submit" class="btn btn-sm btn-success" href="#">Atualizar</button></td>
                         </form>
-                        <td><a href="#">Remover</a></td>
+                        <td><a href="{{url_for('deleteiten', id=key)}}" class="btn btn-sm btn-danger">Remover</a></td>
                     </tr>
                     {% endfor %}
                     <tr>
                         <td></td>
-                        <td><a href="/">Voltar</a></td>
+                        <td><a href="/">Processar Compra</a></td>
                         <td colspan="3">Imposto:&nbsp; R$ {{imposto}}</td>
                         <td colspan="5">Valor Pagar:&nbsp; R$ {{valorpagar}}</td>
                     </tr>

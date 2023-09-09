@@ -7,8 +7,6 @@ if __name__ == "__main__":
 
 
 
-# 23.0
-# Add - Minifig ao carrinho
-# Add - Botao de atualizar itens no carrinho
-# Add - flash msg no carrinho
-# Upp - pagina unica recebeu a navbar
+# 24.0
+# Add - O botao deletar do carrinho
+# Upp - Refatorado rotas.py add duas def

@@ -19,13 +19,16 @@ def home():
     produtos = Addproduto.query.filter(Addproduto.stock > 0).order_by(Addproduto.id.desc()).paginate(page=pagina, per_page=3)
     return render_template('produtos/index.html', produtos=produtos, marcas=marcas(), categorias=categorias())
 
-@app.route('/pesquisar')
-def pesquisar():
-    searchword = request.args.get('q')
-    produtos= Addproduto.query.msearch(searchword, fields=['name','desc'], limit=3)
-    return render_template('produtos/pesquisar.html', produtos=produtos)
-
-
+@app.route('/search', methods=['GET', 'POST'])
+def search():
+    if request.method=='POST':
+        form = request.form
+        search_value = form['search_string']
+        search = "%{0}%".format(search_value)
+        produtos = Addproduto.query.filter(Addproduto.name.like(search)).all()
+        return render_template('pesquisar.html', produtos=produtos, marcas=marcas(), categorias=categorias())
+    else:
+        return redirect('/')
 
 
 @app.route('/marca/<int:id>')

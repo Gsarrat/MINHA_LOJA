@@ -7,10 +7,7 @@ if __name__ == "__main__":
 
 
 
-# 25.0
-# Add - O botao deletar o carrinho
-# Upp - Auto increment no carrinho de itens clicados duas vezes
-# Add - Biblioteca search do flask
-# Add - Novo arquivo pesquisar.html (vazio)
-# Upp - Models foi atualizado para permitir buscas
-# Add - Rotas recebeu nova rota pesquisar
+# 26.0
+# Rem - Removido o msearch
+# Upp - Navbar retrofit, funcionando perfeitamente
+#  

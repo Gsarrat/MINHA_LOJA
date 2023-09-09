@@ -24,7 +24,7 @@ def AddCart():
                 'discount': produto.discount,
                 'colors': produto.colors,
                 'quantity': int(quantity),
-                'image_1': produto.image_1,
+                'image_1': produto.image_1
             }}
             if 'LojainCarrinho' in session:
                 print(session['LojainCarrinho'])
@@ -55,3 +55,36 @@ def getCart():
         imposto = ("%.2f"% (.00 * float(subtotal))) # <----- aqui altera a aliquota de imposto a ser calculado no .00
         valorpagar = float("%.2f" %(1.06 * subtotal))
     return render_template('produtos/carros.html' , imposto=imposto, valorpagar=valorpagar)
+
+@app.route('/updateCarro/<int:code>', methods=['POST'])
+def updateCarro(code):
+    if 'LojainCarrinho' not in session and len(session['LojainCarrinho'])<= 0:
+        return redirect(url_for('home'))
+    if request.method == "POST":
+        quantity = request.form.get('quantity')
+        color = request.form.get('color')
+        try:
+            session.modified = True
+            for key, item in session['LojainCarrinho'].items():
+                if int(key) == code:
+                    item['quantity'] = quantity
+                    item['color'] = color
+                    flash('Item foi atualizado com sucesso!')
+                    return redirect(url_for('getCart'))
+
+        except Exception as e:
+            print(e)
+            return redirect(url_for('getCart'))
+
+
+
+
+
+
+@app.route('/vazio')
+def vazio_Cart():
+    try:
+        session.clear
+        return redirect(url_for('home'))
+    except Exception as e:
+        print(e)

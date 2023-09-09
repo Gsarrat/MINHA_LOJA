@@ -7,10 +7,8 @@ if __name__ == "__main__":
 
 
 
-# 22.0
-# Add - A coluna quantidade
-# Add - Calculo de imposto no carrinho
-# Add - Calculo do valor total
-# Add - Calculo da soma do total
-# Upp - Navbar segregada no arquivo navbar.html
-# Att - Alguns styles no carrinho
+# 23.0
+# Add - Minifig ao carrinho
+# Add - Botao de atualizar itens no carrinho
+# Add - flash msg no carrinho
+# Upp - pagina unica recebeu a navbar

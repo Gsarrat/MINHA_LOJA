@@ -7,7 +7,10 @@ if __name__ == "__main__":
 
 
 
-# 26.0
-# Rem - Removido o msearch
-# Upp - Navbar retrofit, funcionando perfeitamente
-#  
+# 27.0
+# Add - clientes/Forms.py
+# Add - clientes/__init__.py
+# Add - clientes/rotas.py
+# Add - templates/cliente
+# Add - templates/cliente/cliente.html
+# Add - tela de cadasto de clientes criada e importando os forms

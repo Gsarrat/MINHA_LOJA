@@ -46,4 +46,12 @@ def AddCart():
 def getCart():
     if 'LojainCarrinho' not in session:
         return redirect(request.referrer)
-    return render_template('produtos/carros.html')
+    subtotal = 0
+    valorpagar = 0
+    for key, produto in session['LojainCarrinho'].items():
+        discount = (produto['discount']/100) * float(produto['price'])
+        subtotal += float(produto['price']) * int(produto['quantity'])
+        subtotal -= discount 
+        imposto = ("%.2f"% (.00 * float(subtotal))) # <----- aqui altera a aliquota de imposto a ser calculado no .00
+        valorpagar = float("%.2f" %(1.06 * subtotal))
+    return render_template('produtos/carros.html' , imposto=imposto, valorpagar=valorpagar)

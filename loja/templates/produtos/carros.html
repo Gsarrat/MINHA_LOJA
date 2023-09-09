@@ -63,9 +63,10 @@
                     {% endfor %}
                     <tr>
                         <td></td>
-                        <td><a href="/">Processar Compra</a></td>
+                        <td><a href="/" class="btn btn-success btn-sm float-left">Processar Compra</a></td>
                         <td colspan="3">Imposto:&nbsp; R$ {{imposto}}</td>
                         <td colspan="5">Valor Pagar:&nbsp; R$ {{valorpagar}}</td>
+                        <td><a href="{{url_for('limparcarro')}}" class="btn btn-danger btn-sm float-right">Limpar Carrinho</a></td>
                     </tr>
                 </tbody>
             </table>

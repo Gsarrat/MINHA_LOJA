@@ -31,7 +31,11 @@ def AddCart():
             if 'LojainCarrinho' in session:
                 print(session['LojainCarrinho'])
                 if produto_id in session['LojainCarrinho']:
-                    print("ESTE PRODUTO JA EXISTE NO CARRINHO")
+                    if produto_id in session['LojainCarrinho']:
+                        for key, item in session['LojainCarrinho'].items():
+                            if int(key) == int(produto_id):
+                                session.modified = True
+                                item['quantity'] += 1
                 else:
                     session['LojainCarrinho'] = M_Dicionarios(session['LojainCarrinho'], DicItems)
                     return redirect(request.referrer)
@@ -100,11 +104,11 @@ def deleteiten(id):
 
 
 
-
-@app.route('/vazio')
-def vazio_Cart():
+@app.route('/limparcarro')
+def limparcarro():
     try:
-        session.clear
+        session.pop('LojainCarrinho',None)
         return redirect(url_for('home'))
+    
     except Exception as e:
-        print(e)
+            print(e)

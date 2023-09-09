@@ -7,6 +7,10 @@ if __name__ == "__main__":
 
 
 
-# 24.0
-# Add - O botao deletar do carrinho
-# Upp - Refatorado rotas.py add duas def
+# 25.0
+# Add - O botao deletar o carrinho
+# Upp - Auto increment no carrinho de itens clicados duas vezes
+# Add - Biblioteca search do flask
+# Add - Novo arquivo pesquisar.html (vazio)
+# Upp - Models foi atualizado para permitir buscas
+# Add - Rotas recebeu nova rota pesquisar

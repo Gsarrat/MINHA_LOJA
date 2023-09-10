@@ -7,6 +7,6 @@ if __name__ == "__main__":
 
 
 
-# 30.0
-# Add - Flask Migrate
-# Add - Tabela cliente_pedido
+# 31.0
+# Add - Botao de realizar o pedido carros.html
+# Add - pedidos sendo apensados no banco cliente_pedido

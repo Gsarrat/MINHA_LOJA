@@ -3,7 +3,7 @@ from flask_bcrypt import Bcrypt
 from loja import db, app, photos, bcrypt, login_manager
 from .forms import CadastroClienteForm, ClienteLoginForm
 import secrets, os
-from .models import Cadastrar
+from .models import Cadastrar, ClientePedido
 from flask_login import login_required, current_user, login_user, logout_user
 
 
@@ -52,3 +52,23 @@ def clienteLogin():
 def cliente_logout():
     logout_user()
     return redirect(url_for('home'))
+
+
+@app.route('/pedido_order')
+@login_required
+def pedido_order():
+    if current_user.is_authenticated:
+        cliente_id = current_user.id
+        notafiscal = secrets.token_hex(5)
+        try:
+            p_order = ClientePedido(notafiscal=notafiscal, cliente_id=cliente_id, pedido=session['LojainCarrinho'])
+            db.session.add(p_order)
+            db.session.commit()
+            session.pop('LojainCarrinho')
+            flash('Seu pedido foi salvo com sucesso', 'success')
+
+            return redirect(url_for('home'))
+        except Exception as e:
+            print(e)
+            flash('Pedido nao processado', 'danger')
+            return redirect(url_for('getCart'))

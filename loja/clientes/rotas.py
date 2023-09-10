@@ -72,3 +72,26 @@ def pedido_order():
             print(e)
             flash('Pedido nao processado', 'danger')
             return redirect(url_for('getCart'))
+
+
+@app.route('/pedidos/<notafiscal>')
+@login_required
+def pedidos(notafiscal):
+    if current_user.is_authenticated:
+        gTotal = 0
+        subTotal = 0
+        cliente_id = current_user.id
+        cliente = Cadastrar.query.filter_by(id=cliente_id).first()
+        pedidos = ClientePedido.query.filter_by(cliente_id=cliente_id, notafiscal=notafiscal).order_by(ClientePedido.id.desc()).first()
+        for _key, produto in pedidos.pedido.items():
+            disconto = (produto['discount']/100) * float(produto['price'])
+            subTotal += float(produto['price']* int(produto['quantity']))
+            subTotal -= disconto
+            imposto = ("%.2f" % (.00* float(subTotal))) #<--------------altera aliquota de imposto
+            gTotal = float("%.2f" % (1.06 * subTotal)) #<--------------- conferir o calculo
+    else:
+        return redirect(url_for('clenteLogin'))
+    return render_template('cliente/pedido.html', notafiscal=notafiscal, imposto=imposto,subTotal=subTotal, gTotal=gTotal,cliente=cliente, pedidos=pedidos)
+
+
+        

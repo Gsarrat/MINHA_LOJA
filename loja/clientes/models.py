@@ -13,7 +13,7 @@ class JsonEcondedDict(db.TypeDecorator):
         else:
             return json.dumps(value)
         
-    def process_result_param(self, value, dialect):
+    def process_result_value(self, value, dialect):
         if value is None:
             return {}
         else:

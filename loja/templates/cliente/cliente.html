@@ -13,6 +13,7 @@
         <div class="col-md-2"></div>
     </div>
     <form action="" method="POST">
+        {{form.csrf_token}}
         <div class="row">
             <div class="col-md-2"></div>
             <div class="col-md-4">
@@ -30,7 +31,8 @@
                 {{render_field(form.contact, class="form-control")}}
                 {{render_field(form.address, class="form-control")}}
                 {{render_field(form.zipcode, class="form-control")}}
-                {{form.submit(class="btn btn-sm btn-success float-end")}}
+                <button type="submit" class="btn btn-success float-end">Cadastro</button>
+
 
             </div>
             <div class="col-md-2"></div>

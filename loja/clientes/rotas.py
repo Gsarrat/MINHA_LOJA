@@ -45,3 +45,10 @@ def clienteLogin():
         return redirect(url_for(clienteLogin))
          
     return render_template('/cliente/login.html', form=form)
+
+
+
+@app.route('/cliente/logout')
+def cliente_logout():
+    logout_user()
+    return redirect(url_for('home'))

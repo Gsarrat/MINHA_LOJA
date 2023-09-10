@@ -7,5 +7,6 @@ if __name__ == "__main__":
 
 
 
-# 29.0
-# Fix - major fixes no cadastro usuario
+# 30.0
+# Add - Flask Migrate
+# Add - Tabela cliente_pedido

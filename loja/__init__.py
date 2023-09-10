@@ -4,6 +4,7 @@ from flask_uploads import IMAGES, UploadSet, configure_uploads
 from flask_bcrypt import Bcrypt
 import os
 from flask_login import LoginManager
+from flask_migrate import Migrate
 
 
 basedir = os.path.abspath(os.path.dirname(__file__))
@@ -12,6 +13,13 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "sqlite:///minhaloja.db"
 app.config['SECRET_KEY'] = "12345"
 db = SQLAlchemy(app)
 bcrypt = Bcrypt(app)
+
+migrate = Migrate(app, db)
+with app.app_context():
+    if db.engine.url.drivername =="sqlite":
+        migrate.init_app(app, db, render_as_batch=True)
+    else:
+        migrate.init_app(app, db)
 
 login_manager = LoginManager()
 login_manager.init_app(app)

@@ -1,9 +1,10 @@
 from flask import redirect, render_template, url_for, flash, request, session, current_app
 from flask_bcrypt import Bcrypt
-from loja import db, app, photos, bcrypt
-from .forms import CadastroClienteForm
+from loja import db, app, photos, bcrypt, login_manager
+from .forms import CadastroClienteForm, ClienteLoginForm
 import secrets, os
 from .models import Cadastrar
+from flask_login import login_required, current_user, login_user, logout_user
 
 
 @app.route('/cliente/cadastrar', methods=['GET', 'POST'])
@@ -28,3 +29,19 @@ def cadastrar_clientes():
 
             return redirect(url_for('login'))
     return render_template('/cliente/cliente.html', form=form)
+
+
+@app.route('/cliente/login', methods=['GET', 'POST'])
+def clienteLogin():
+    form = ClienteLoginForm()
+    if form.validate_on_submit():
+        user = Cadastrar.query.filter_by(email=form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user)
+            flash('Voce esta Logado', 'success')
+            next = request.args.get('next')
+            return redirect(next or url_for('home'))
+        flash('Login falhou', 'danger')
+        return redirect(url_for(clienteLogin))
+         
+    return render_template('/cliente/login.html', form=form)

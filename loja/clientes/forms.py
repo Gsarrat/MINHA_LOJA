@@ -26,3 +26,9 @@ class CadastroClienteForm(FlaskForm):
     def validate_email(self, email):
         if Cadastrar.query.filter_by(email=email.data).first():
             raise ValidationError("Este E-mail ja esta em uso")
+        
+
+class ClienteLoginForm(FlaskForm):
+    email = StringField('Email : ',[validators.DataRequired()])
+    password = PasswordField('Senha:', [validators.DataRequired()])
+

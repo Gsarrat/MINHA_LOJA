@@ -7,5 +7,5 @@ if __name__ == "__main__":
 
 
 
-# 28.0
-# Fix - tela de cadastro corrigida e 100% funcional
+# 29.0
+# Fix - major fixes no cadastro usuario

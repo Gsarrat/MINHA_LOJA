@@ -1,8 +1,13 @@
-from loja import db, app
+from loja import db, app, login_manager
 from datetime import datetime
+from flask_login import UserMixin
 
 
-class Cadastrar(db.Model):
+@login_manager.user_loader
+def user_carregar(user_id):
+    return Cadastrar.query.get(user_id)
+
+class Cadastrar(db.Model, UserMixin):
     id       = db.Column(db.Integer,primary_key = True)
     name     = db.Column(db.String(50), unique = False)
     username = db.Column(db.String(50), unique = False)

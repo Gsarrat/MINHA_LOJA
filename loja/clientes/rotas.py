@@ -5,7 +5,8 @@ from .forms import CadastroClienteForm, ClienteLoginForm
 import secrets, os
 from .models import Cadastrar, ClientePedido
 from flask_login import login_required, current_user, login_user, logout_user
-import pdfkit  
+import pdfkit
+import mercadopago
 
 
 @app.route('/cliente/cadastrar', methods=['GET', 'POST'])
@@ -123,3 +124,13 @@ def get_pdf(notafiscal):
             return response
     return redirect(url_for('pedidos'))
 
+
+
+'''
+@app.route('/buy/<notafiscal>', methods=['POST'])
+def buy_products(notafiscal):
+    cliente_id = current_user.id
+    product = ClientePedido.query.filter_by(cliente_id=cliente_id, notafiscal=notafiscal).order_by(ClientePedido.id.desc()).first()
+    return redirect(payment(request, product=product))
+
+'''

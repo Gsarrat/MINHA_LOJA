@@ -1,71 +1,76 @@
 <div class="container">
-    <nav class="navbar navbar-expand-lg bg-body-tertiary">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="/">Pagina Home</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-          aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-  
-            <li class="nav-item">
-              <a class="nav-link" href="/">Todos Produtos</a>
-            </li>
-  
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Marcas | Fabricante
-              </a>
-              <ul class="dropdown-menu">
-                {% for marca in marcas %}
-                <li><a class="dropdown-item" href="{{url_for('get_marca', id=marca.id)}}">{{marca.name}}</a></li>
-                {% endfor %}
-              </ul>
-            </li>
-  
-  
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                Categorias
-              </a>
-              <ul class="dropdown-menu">
-                {% for categoria in categorias %}
-                <li><a class="dropdown-item" href="{{ url_for('get_categoria', id=categoria.id) }}">{{ categoria.name
-                    }}</a></li>
-                {% endfor %}
-              </ul>
-            </li>
-            <!-- Bloco de authenticacao do usuario -->
+  <nav class="navbar navbar-expand-lg bg-body-tertiary">
+    <div class="container-fluid">
+      <img src="{{ url_for('static', filename='images/sys/logo.svg') }}" alt="carrinho" height="30" width="120">
+
+      <a class="navbar-brand" href="/">PRODUTOS</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav">
+          <li class="nav-item">
+            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Marcas
+            </a>
+            <ul class="dropdown-menu">
+              {% for marca in marcas %}
+              <li><a class="dropdown-item" href="{{ url_for('get_marca', id=marca.id) }}">{{ marca.name }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              Categorias
+            </a>
+            <ul class="dropdown-menu">
+              {% for categoria in categorias %}
+              <li><a class="dropdown-item" href="{{ url_for('get_categoria', id=categoria.id) }}">{{ categoria.name }}</a></li>
+              {% endfor %}
+            </ul>
+          </li>
+
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for('getCart') }}">
+              <img src="{{ url_for('static', filename='images/sys/carrinho.svg') }}" alt="carrinho" width="17" height="17">
+              ({{ session['LojainCarrinho']|length }})
+            </a>
+          </li>
+        </ul>
+        <div class="ms-auto">
+          <!-- Bloco de autenticação do usuário -->
+          <ul class="navbar-nav">
             {% if current_user.is_authenticated %}
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('cliente_logout')}}" >{{current_user.name}}</a>
+              <a class="nav-link" href="{{ url_for('cliente_logout') }}">{{ current_user.name }}</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('cliente_logout')}}" >Sair</a>
+              <a class="nav-link" href="{{ url_for('cliente_logout') }}">Sair</a>
             </li>
             {% else %}
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('cadastrar_clientes')}}" >Cadastrar</a>
+              <a class="nav-link" href="{{ url_for('cadastrar_clientes') }}">Cadastrar</a>
             </li>
-
             <li class="nav-item">
-              <a class="nav-link" href="{{url_for('clienteLogin')}}" >Sair</a>
+              <a class="nav-link" href="{{ url_for('clienteLogin') }}">Sair</a>
             </li>
             {% endif %}
-            <!-- FIM Bloco de authenticacao do usuario -->
+          <!-- Formulário de pesquisa -->
+            <form class="d-flex" method="POST">
+              <input class="form-control me-2" type="text" placeholder="Pesquisar Produto" autofocus="autofocus" name="search_string" aria-label="Search">
+              <input class="btn btn-sm btn-outline-success" type="submit" formaction="/search" value="Pesquisar">
+            </form>
+          <!-- FIM Formulário de pesquisa -->
 
-  
-            <li class="nav-item">
-              <a class="nav-link" href="{{url_for('getCart')}}" tabindex="-1">Carrinho({{session['LojainCarrinho']|length}})</a>
-          </li>
-  
+
           </ul>
-          <form class="form-inline my-2 my-lg-0" method="POST">
-            <input class="form-control mr-sm-2" type="text" placeholder="Pequisar Produto" autofocus="autofocus" name="search_string" aria-label="Search">
-            <input class="btn btn-outline-success my-2 my-sm-0" type="submit" formaction="/search" value="Pesquisar">
-          </form>
+          <!-- FIM Bloco de autenticação do usuário -->
+
+
         </div>
       </div>
-    </nav>
-  </div>
+    </div>
+  </nav>
+</div>

@@ -23,8 +23,8 @@
             <p class="text-center">Preco: R$ {{m.price}}</p>
 
         </div>
-        <div class="card-footer">
-          <a href="{{url_for('pagina_unica',id=m.id)}}" class="float-left btn btn-sm btn-success">Detalhes
+        <div class="row card-footer">
+          <a href="{{url_for('pagina_unica',id=m.id)}}" class="float-left btn btn-sm btn-success">Detalhes 
             Fabricante</a>
             <form action="{{url_for('AddCart')}}" method="POST">
               <input type="hidden" name="produto_id" value="{{m.id}}">
@@ -164,7 +164,7 @@
   <div class="col-md-3">
     <div class="card">
       <img src="{{url_for('static', filename='images/' + produto.image_1)}}" alt="{{produto.name}}" class="card-img-top"
-        height="180">
+        height="180" style="object-fit: none;">
       <div class="card-body">
         {% if produto.discount > 0 %}
         <h5
@@ -175,17 +175,17 @@
           <p class="text-center">Preco: R$ {{produto.price}}</p>
 
       </div>
-      <div class="card-footer">
-        <a href="{{url_for('pagina_unica',id=produto.id)}}" class="float-left btn btn-sm btn-success">Detalhes</a>
+      <div class="card-footer" style="display:flex; justify-content: center; gap: 10px;">
+        <a href="{{url_for('pagina_unica',id=produto.id)}}" class="btn btn-sm btn-success col-md-5">Detalhes</a>
 
-        <form action="{{url_for('AddCart')}}" method="POST">
+        <form action="{{url_for('AddCart')}}" method="POST" class="col-md-7">
           <input type="hidden" name="produto_id" value="{{produto.id}}">
-          <button type="submit" class="btn btn-sm btn-warning float-right">Adicionar Carrinho</button>
+          <button type="submit" class="btn btn-sm btn-warning w-100">Add Carrinho</button>
 
           <input type="hidden" name="quantity" id="" value="1" min="1" max="{{produto.stock}}">
           {% set colors = produto.colors.split(',') %}
 
-          <select name="colors" id="colors" style="visibility: hidden;">
+          <select name="colors" id="colors" style="display: none;">
             {% for color in colors %}
             {% set col = color.split(':') %}
             <option value="{{col[0]}}">"{{col[0]|capitalize}}"</option>

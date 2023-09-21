@@ -125,12 +125,10 @@ def get_pdf(notafiscal):
     return redirect(url_for('pedidos'))
 
 
+#sdk = mercadopago.SDK("PROD_ACCESS_TOKEN")
 
-'''
-@app.route('/buy/<notafiscal>', methods=['POST'])
-def buy_products(notafiscal):
-    cliente_id = current_user.id
-    product = ClientePedido.query.filter_by(cliente_id=cliente_id, notafiscal=notafiscal).order_by(ClientePedido.id.desc()).first()
-    return redirect(payment(request, product=product))
-
-'''
+#preference_data = {
+#    "items": [session['LojainCarrinho']]
+#}
+#preference_response = sdk.preference().create(preference_data)
+#preference = preference_response["response"]

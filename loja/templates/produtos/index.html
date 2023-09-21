@@ -162,17 +162,20 @@
 
   {% for produto in produtos.items %}
   <div class="col-md-3">
-    <div class="card">
+    <div class="card mt-3" style="min-height: 420px;">
       <img src="{{url_for('static', filename='images/' + produto.image_1)}}" alt="{{produto.name}}" class="card-img-top"
-        height="180" style="object-fit: none;">
+        height="180" style="object-fit: scale-down;">
       <div class="card-body">
         {% if produto.discount > 0 %}
-        <h5
-          style="text-shadow: 1px 1px 2px #000; color: #f00; transform: rotate(-3deg); position:absolute; top: 50%; left: 25%; font-weight: 600;">
-          Desconto {{produto.discount}} %</p>
+        <h5 style="text-shadow: 1px 1px 2px #000; color: rgb(13, 7, 17); transform: rotate(-3deg); position:absolute; top: 50%; left: 25%; font-weight: 600;">
+          Desconto {{produto.discount}} %
+        </h5>
+          <br>
+          <p>Por: {{ produto.price|float * (produto.discount / 100) }}</p>
           {% endif %}
           <h4 class="text-center">{{produto.name}}</h4>
           <p class="text-center">Preco: R$ {{produto.price}}</p>
+
 
       </div>
       <div class="card-footer" style="display:flex; justify-content: center; gap: 10px;">

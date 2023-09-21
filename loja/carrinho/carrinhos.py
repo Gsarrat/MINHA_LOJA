@@ -3,6 +3,8 @@ from loja import db, app
 from loja.produtos.models import Addproduto
 from loja.produtos.rotas import marcas, categorias
 import json
+import mercadopago
+
 
 def M_Dicionarios(dic1, dic2):
     if isinstance(dic1, list) and isinstance(dic2, list):
@@ -112,3 +114,40 @@ def limparcarro():
     
     except Exception as e:
             print(e)
+
+###############################################################################################################################
+
+
+
+@app.route("/checkout", methods=["GET", "POST"])
+def checkout():
+    AccessToken = "APP_USR-6790317510701094-091914-b61e81dbfbd07b1d28b23ca375636511-136080481"
+    sdk = mercadopago.SDK(AccessToken)
+
+    # Lista do carrinho
+    items = []
+    for key, item in session.get('LojainCarrinho', {}).items():
+        items.append({
+            "id": key,
+            "title": item['name'],
+            "quantity": item['quantity'],
+            "unit_price": float(item['price']),  # Certifique-se de que o preço seja um número
+            "currency_id": "BRL",  # Defina a moeda apropriada
+            "picture_url": item['image_1'],
+        })
+    # Criar a preferência
+    preference_data = {
+        "items": items,
+    }
+    print(items)
+    try:
+        preference_response = sdk.preference().create(preference_data)
+        preference = preference_response["response"]
+
+        # Redirecionamento para o link de pagamento
+        return redirect(preference["sandbox_init_point"])# Ou use a URL correta para produção
+    except Exception as e:
+        print(e)
+
+
+###############################################################################################################################

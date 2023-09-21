@@ -44,7 +44,8 @@
                                 </select>
                             </td>
 
-                            <td>R$ {{produto.price}}</td>
+
+                            <td>R$ {{ produto.price}}</td>
                             <td><input type="number" name="quantity" min="1" max="99" value="{{produto.quantity}}"></td>
                             {% if produto.discount > 0 %}
                             <td>{{produto.discount}} % &nbsp; = {{discount}}</td>
@@ -64,6 +65,12 @@
                     <tr>
                         <td></td>
                         <td><a href="{{url_for('pedido_order')}}" class="btn btn-success btn-sm float-left">Processar Compra</a></td>
+                        <td>
+                            <div id="wallet_container">
+                                <a href="{{url_for('checkout')}}" class="btn btn-success btn-sm float-left">Processar Compra com Mercado Pago</a>
+                            </div>
+                        </td>
+
                         <td colspan="3">Imposto:&nbsp; R$ {{imposto}}</td>
                         <td colspan="5">Valor Pagar:&nbsp; R$ {{valorpagar}}</td>
                         <td><a href="{{url_for('limparcarro')}}" class="btn btn-danger btn-sm float-right">Limpar Carrinho</a></td>
@@ -73,5 +80,16 @@
         </div>
     </div>
 </div>
+<script src="https://sdk.mercadopago.com/js/v2"></script>
+<script>
+    const mp = new MercadoPago('APP_USR-539df147-80bb-43ee-a83f-076e4d3292ee');
+    const bricksBuilder = mp.bricks();
+    mp.bricks().create("wallet", "wallet_container", {
+    initialization: {
+           preferenceId: "<PREFERENCE_ID>",
+    },
+});
+
+</script>
 
 {% endblock content %}
